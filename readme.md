@@ -14,7 +14,7 @@ This project is launched as a **24-hour Valentine Special event** under the Open
 
 - **Scoring:** 2X Contribution Scoring on this repository.
 
-- **Rewards:** The top contributor will be rewarded with an **exclusive title** on the website.
+- **Rewards:** The top contributor will be rewarded with an **exclusive title** : **Valentine Grand Architect** on the website.
 
 ---
 
