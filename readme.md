@@ -1,7 +1,3 @@
-Based on the document provided, here is a comprehensive `README.md` file tailored for the HeartScript repository.
-
----
-
 # ❤️ HeartScript - Open Source Quest Valentine Special
 
 > **Love logic? Love design? Code it out.**
@@ -95,7 +91,7 @@ To get a local copy up and running, follow these simple steps.
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-username/HeartScript.git
+git clone https://github.com/R3ACTR/HeartScript.git
 cd HeartScript
 
 ```
