@@ -1,11 +1,13 @@
 "use client";
 
+
 import {
   Heart,
   Search,
   Music2,
   VolumeX
 } from "lucide-react";
+
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -16,7 +18,7 @@ export default function Home() {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const audio = audioRef.current;

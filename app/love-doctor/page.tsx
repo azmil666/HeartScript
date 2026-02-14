@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { X } from "lucide-react";
 
 export default function LoveDoctor() {
 
@@ -62,23 +63,49 @@ export default function LoveDoctor() {
         Enter both names and let Love Doctor predict your romantic future 🔮
       </p>
 
-      {/* ✅ UPDATED WHITE PREMIUM INPUT */}
-      <input
-        type="text"
-        placeholder="Your Name"
-        value={name1}
-        onChange={(e) => setName1(e.target.value)}
-        className="mb-4 p-3 rounded-lg w-64 bg-white text-gray-900 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-200"
-      />
+      {/* ✅ INPUT WITH CLEAR BUTTON */}
+      <div className="relative mb-4">
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name1}
+          onChange={(e) => setName1(e.target.value)}
+          className="p-3 pr-10 rounded-lg w-64 bg-white text-gray-900 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-200"
+        />
 
-      {/* ✅ UPDATED WHITE PREMIUM INPUT */}
-      <input
-        type="text"
-        placeholder="Partner Name"
-        value={name2}
-        onChange={(e) => setName2(e.target.value)}
-        className="mb-4 p-3 rounded-lg w-64 bg-white text-gray-900 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-200"
-      />
+        {name1 && (
+          <button
+            type="button"
+            onClick={() => setName1("")}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-500 hover:scale-110 transition"
+            aria-label="Clear name"
+          >
+            <X size={18} />
+          </button>
+        )}
+      </div>
+
+      {/* ✅ INPUT WITH CLEAR BUTTON */}
+      <div className="relative mb-4">
+        <input
+          type="text"
+          placeholder="Partner Name"
+          value={name2}
+          onChange={(e) => setName2(e.target.value)}
+          className="p-3 pr-10 rounded-lg w-64 bg-white text-gray-900 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-200"
+        />
+
+        {name2 && (
+          <button
+            type="button"
+            onClick={() => setName2("")}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-500 hover:scale-110 transition"
+            aria-label="Clear partner name"
+          >
+            <X size={18} />
+          </button>
+        )}
+      </div>
 
       {/* EXISTING BUTTON — UNCHANGED */}
       <button

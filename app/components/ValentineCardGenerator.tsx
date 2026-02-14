@@ -53,6 +53,32 @@ export default function ValentineCardGenerator() {
     { id: 2, x: 220, y: 90, emoji: "💕" },
   ]);
 
+  /* ---------------- LOVE METER ---------------- */
+const calculateLoveScore = () => {
+  let score = 0;
+
+  const romanticWords = ["love", "forever", "heart", "always", "beautiful"];
+
+  // Add score for message length
+  score += Math.min(message.length * 0.5, 50);
+
+  // Add score for romantic keywords
+  romanticWords.forEach((word) => {
+    if (message.toLowerCase().includes(word)) {
+      score += 10;
+    }
+  });
+
+  // Add score for heart emojis
+  const heartCount = (message.match(/❤️|💕|💖|💘|💝/g) || []).length;
+  score += heartCount * 5;
+
+  return Math.min(Math.floor(score), 100);
+};
+
+const loveScore = calculateLoveScore();
+
+
   /* ---------------- VALIDATION ---------------- */
   const validateStepOne = () => {
     if (!recipient.trim()) {
@@ -119,6 +145,22 @@ export default function ValentineCardGenerator() {
     setTimeout(() => setShowCopied(false), 2000);
   };
 
+  const handleWhatsAppShare = () => {
+    const text = `Check out this Valentine card I made for ${recipient}! ${message}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const handleTwitterShare = () => {
+    const text = `Check out this Valentine card I made for ${recipient}! ${message}`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const handleEmailShare = () => {
+    const subject = `Happy Valentine's Day, ${recipient}!`;
+    const body = message;
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const moveSticker = (id: number, x: number, y: number) => {
     setStickers((prev) =>
       prev.map((s) => (s.id === id ? { ...s, x, y } : s))
@@ -127,8 +169,8 @@ export default function ValentineCardGenerator() {
 
   /* ---------------- UI ---------------- */
   return (
-   <main
-  className={`flex flex-col items-center px-4 py-8 w-full max-w-6xl mx-auto min-h-screen transition-all duration-700 ${
+<main
+  className={`flex flex-col items-center px-4 py-6 sm:py-8 w-full max-w-6xl mx-auto min-h-screen overflow-x-hidden transition-all duration-700 ${
     theme === "romantic"
       ? "bg-gradient-to-r from-pink-200 via-rose-200 to-pink-300 animate-pulse"
       : theme === "cute"
@@ -140,14 +182,14 @@ export default function ValentineCardGenerator() {
 
       {/* STEP 1 */}
       {step === 1 && (
-        <div className="grid lg:grid-cols-2 gap-12 w-full">
-          <div className="flex flex-col gap-6">
-            <button
-              onClick={generateRandomQuote}
-              className="px-4 py-2 bg-[#800020] text-white rounded-lg"
-            >
-              💌 Generate Love Quote
-            </button>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full items-start">
+  <div className="flex flex-col gap-6">
+    <button
+      onClick={generateRandomQuote}
+      className="px-4 py-2 bg-[#800020] text-white rounded-lg"
+    >
+      💌 Generate Love Quote
+    </button>
 
 
             <button
@@ -162,20 +204,29 @@ export default function ValentineCardGenerator() {
 
             {/* Recipient */}
             <div>
-              <input
-                value={recipient}
-                onChange={(e) => {
-                  setRecipient(e.target.value);
-                  setError(null);
-                }}
-                placeholder="Enter recipient's name"
-                className="px-4 py-4 border rounded w-full"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                This name will appear on the card
-              </p>
-            </div>
+<h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+  Create Your<br />Valentine Card
+</h1>
+<p className="text-gray-600">
+  Craft a message straight from the heart.
+</p>
+</div>
 
+{/* Recipient */}
+<input
+  autoFocus
+  value={recipient}
+  onChange={(e) => {
+    setRecipient(e.target.value);
+    setError(null);
+  }}
+  placeholder="Enter recipient's name"
+  className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none transition text-base"
+/>
+
+<p className="text-sm text-gray-500 mt-1">
+  This name will appear on the card
+</p>
             {/* Message */}
             <div>
               <textarea
@@ -185,8 +236,8 @@ export default function ValentineCardGenerator() {
                   setError(null);
                 }}
                 rows={5}
-                placeholder="Write your heartfelt message here…"
-                className="px-4 py-4 border-2 rounded-lg resize-none w-full"
+placeholder="Write your heartfelt message here…"
+className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none resize-none text-base"
               />
               <p className="text-sm text-gray-500 mt-1">
                 Your message will be shown exactly as written
@@ -200,14 +251,31 @@ export default function ValentineCardGenerator() {
               >
                 {message.length} / {MESSAGE_LIMIT} characters
               </p>
+
+              {/* Love Meter */}
+<div className="mt-2">
+  <p className="text-sm font-medium">
+    💖 Love Level: {loveScore}%
+  </p>
+  <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+    <div
+      className="bg-pink-500 h-2 rounded-full transition-all duration-500"
+      style={{ width: `${loveScore}%` }}
+    />
+  </div>
+</div>
+
+
+              
             </div>
 
             {/* Emoji picker */}
             <div className="relative">
               <button
-                title="Add emoji"
-                onClick={() => setShowEmoji(!showEmoji)}
-                className="text-2xl"
+type="button"
+title="Add emoji"
+onClick={() => setShowEmoji(!showEmoji)}
+className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100 transition"
               >
                 😊
               </button>
@@ -250,6 +318,7 @@ export default function ValentineCardGenerator() {
           </div>
 
           <CardPreview
+            id="valentine-card-preview"
             {...{ recipient, message, theme, alignment, font }}
             stickers={stickers}
             moveSticker={moveSticker}
@@ -270,6 +339,7 @@ export default function ValentineCardGenerator() {
   </div>
 
   <CardPreview
+    id="valentine-card-preview"
     {...{ recipient, message, theme, alignment, font }}
     stickers={stickers}
     moveSticker={moveSticker}
@@ -314,17 +384,19 @@ export default function ValentineCardGenerator() {
 
           <div className="grid grid-cols-2 gap-4">
             <button
+              onClick={handleWhatsAppShare}
               disabled={!message.trim()}
               title={!message.trim() ? "Add a message to enable WhatsApp sharing" : ""}
-              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink-50"
             >
               💬 WhatsApp
             </button>
 
             <button
+              onClick={handleTwitterShare}
               disabled={!message.trim()}
               title={!message.trim() ? "Write a message to share on Twitter" : ""}
-              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink-50"
             >
               🐦 Twitter (X)
             </button>
@@ -337,7 +409,10 @@ export default function ValentineCardGenerator() {
               {showCopied ? "Copied!" : "Copy Share Link"}
             </button>
 
-            <button className="flex items-center gap-2 border p-6 rounded">
+            <button 
+              onClick={handleEmailShare}
+              className="flex items-center gap-2 border p-6 rounded hover:bg-pink-50"
+            >
               <Mail />
               Email
             </button>
