@@ -268,15 +268,16 @@ export default function ValentineCardGenerator() {
   };
 
   return (
-    <main className="flex-grow flex flex-col items-center justify-center px-4 py-8 w-full max-w-6xl mx-auto">
+    <main className="flex-grow flex flex-col items-center px-4 py-6 sm:py-8 w-full max-w-6xl mx-auto overflow-x-hidden">
 
       {step === 1 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full items-start">
+
 
           <div className="flex flex-col gap-8">
 
             <div>
-              <h1 className="font-display text-5xl font-bold text-gray-900 mb-3">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3">
                 Create Your<br/>Valentine Card
               </h1>
               <p className="text-gray-600">
@@ -290,7 +291,7 @@ export default function ValentineCardGenerator() {
               value={recipient}
               onChange={(e)=>setRecipient(e.target.value)}
               placeholder="Recipient Name"
-              className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none"
+              className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none transition text-base"
             />
 
             {/* Message */}
@@ -302,14 +303,14 @@ export default function ValentineCardGenerator() {
                 placeholder="Personal Message"
                 maxLength={500}
                 rows={5}
-                className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none resize-none"
+                className="px-4 py-4 w-full rounded-lg border-2 border-gray-300 focus:border-[#800020] outline-none resize-none text-base"
               />
 
               {/* Emoji Button */}
               <button
                 type="button"
                 onClick={()=>setShowEmoji(!showEmoji)}
-                className="absolute bottom-3 right-3 text-xl"
+                className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100 transition"
               >
                 😊
               </button>
