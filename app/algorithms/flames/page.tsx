@@ -300,8 +300,8 @@ export default function FlamesPage() {
           </h1>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-pink-50 p-4 rounded-2xl text-center">
+        <div className="bg-[#] grid grid-cols-2 gap-4 mb-8">
+          <div className="bg-[#] p-4 rounded-2xl text-center">
             <div className="text-3xl font-bold text-pink-600">{calculation.remainingCount}</div>
             <div className="text-xs font-semibold text-pink-400 uppercase mt-1">Remaining Letters</div>
           </div>
@@ -317,7 +317,7 @@ export default function FlamesPage() {
 
         <button
           onClick={resetGame}
-          className="w-full py-4 bg-white border-2 border-pink-200 text-pink-600 rounded-2xl font-bold hover:bg-pink-50 hover:border-pink-300 transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 bg-[#FFAAB8] border-2 border-pink-200 text-white rounded-2xl font-bold hover:text-[#FFAAB8] hover:bg-pink-50 hover:border-pink-300 transition-colors flex items-center justify-center gap-2"
         >
           <RefreshCw className="w-5 h-5" />
           <span>Try Another Couple</span>
