@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Calculator, Flame, MessageCircle, Sparkles, PenTool, Search } from "lucide-react";
+import { Heart, Calculator, Flame, MessageCircle, Sparkles, PenTool, Rose } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import FloatingHearts from "./algorithms/flames/FloatingHearts";
@@ -41,6 +41,14 @@ export default function Home() {
       icon: PenTool,
       color: "from-[#F875AA] to-[#FF8FB7]",
       path: "/create",
+    },
+    {
+      id: "Marry",
+      title: "Meet2Marry Date",
+      description: "Discover your destined date to marry based on your Meeting Date",
+      icon: Rose,
+      color: "from-blue-500 to-red-500",
+      path: "/marry",
     },
     {
       id: "truth-or-dare",
