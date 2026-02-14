@@ -6,10 +6,12 @@ import CardPreview from "./CardPreview";
 export default function ValentineCardGenerator() {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
+  const [theme, setTheme] = useState("romantic"); // ✅ default theme
 
   const handleReset = () => {
     setRecipient("");
     setMessage("");
+    setTheme("romantic"); // reset theme also
   };
 
   return (
@@ -55,6 +57,23 @@ export default function ValentineCardGenerator() {
           </div>
         </div>
 
+        {/* Theme Selector */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Select Theme
+          </label>
+
+          <select
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            className="w-full border rounded p-2"
+          >
+            <option value="romantic">Romantic</option>
+            <option value="dark">Dark Love</option>
+            <option value="pastel">Pastel Dream</option>
+          </select>
+        </div>
+
       </div>
 
       {/* Reset Button */}
@@ -69,6 +88,7 @@ export default function ValentineCardGenerator() {
       <CardPreview
         recipient={recipient}
         message={message}
+        theme={theme}
       />
 
     </div>

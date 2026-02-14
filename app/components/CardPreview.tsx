@@ -3,27 +3,38 @@
 interface CardPreviewProps {
   recipient: string;
   message: string;
+  theme: string;
 }
 
 export default function CardPreview({
   recipient,
   message,
+  theme,
 }: CardPreviewProps) {
+
+  const themeStyles: Record<string, string> = {
+    romantic:
+      "bg-gradient-to-br from-pink-500 via-rose-500 to-red-500 text-white",
+    dark:
+      "bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white",
+    pastel:
+      "bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-black",
+  };
+
   return (
     <div className="mt-8 flex justify-center">
 
       {/* Card Container */}
-      <div className="
+      <div className={`
         w-full max-w-md
-        bg-gradient-to-br from-pink-500 via-rose-500 to-red-500
-        text-white
+        ${themeStyles[theme]}
         rounded-2xl
         shadow-2xl
         p-8
         relative
         overflow-hidden
         transform transition duration-300 hover:scale-105
-      ">
+      `}>
 
         {/* Decorative hearts */}
         <div className="absolute top-2 right-3 text-2xl opacity-70">❤️</div>
