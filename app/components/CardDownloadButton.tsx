@@ -23,57 +23,85 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
 
   return (
     <div className="download-container">
-      <div className="love-letter-seal">
-        {/* Replace the wax-seal-placeholder div with this: */}
-<div className={`wax-seal ${downloadComplete ? 'sealed' : ''}`}>
-  <svg 
-    viewBox="0 0 100 100" 
-    className="seal-stamp"
-    style={{
-      filter: downloadComplete ? 'none' : 'grayscale(0.3)',
-    }}
-  >
-    {/* Wax seal outer circle */}
-    <circle cx="50" cy="50" r="48" fill="#8B1538" opacity="0.9"/>
-    <circle cx="50" cy="50" r="45" fill="#A01D48"/>
-    
-    {/* Heart emboss */}
-    <path
-      d="M50 65 Q35 55 35 45 Q35 35 45 35 Q50 40 50 40 Q50 40 55 35 Q65 35 65 45 Q65 55 50 65"
-      fill="#8B1538"
-      stroke="#6B0F2A"
-      strokeWidth="1"
-    />
-    
-    {/* Wax drips */}
-    <ellipse cx="30" cy="90" rx="8" ry="4" fill="#8B1538" opacity="0.6"/>
-    <ellipse cx="70" cy="88" rx="6" ry="3" fill="#8B1538" opacity="0.6"/>
-    <ellipse cx="50" cy="92" rx="7" ry="4" fill="#8B1538" opacity="0.6"/>
-  </svg>
+      <div className={`wax-seal ${downloadComplete ? 'sealed' : ''}`}>
+        <svg 
+          viewBox="0 0 100 100" 
+          className="seal-stamp"
+          style={{
+            filter: downloadComplete ? 'none' : 'grayscale(0.3)',
+          }}
+        >
+          {/* Wax seal outer circle */}
+          <circle cx="50" cy="50" r="48" fill="#8B1538" opacity="0.9"/>
+          <circle cx="50" cy="50" r="45" fill="#A01D48"/>
+          
+          {/* Heart emboss */}
+          <path
+            d="M50 65 Q35 55 35 45 Q35 35 45 35 Q50 40 50 40 Q50 40 55 35 Q65 35 65 45 Q65 55 50 65"
+            fill="#8B1538"
+            stroke="#6B0F2A"
+            strokeWidth="1"
+          />
+          
+          {/* Wax drips */}
+          <ellipse cx="30" cy="90" rx="8" ry="4" fill="#8B1538" opacity="0.6"/>
+          <ellipse cx="70" cy="88" rx="6" ry="3" fill="#8B1538" opacity="0.6"/>
+          <ellipse cx="50" cy="92" rx="7" ry="4" fill="#8B1538" opacity="0.6"/>
+        </svg>
 
-  {/* Checkmark when complete */}
-  {downloadComplete && (
-    <div className="checkmark-overlay">
-      <svg viewBox="0 0 52 52" className="checkmark">
-        <circle cx="26" cy="26" r="25" fill="none"/>
-        <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-      </svg>
-    </div>
-  )}
-</div>
-
-        {/* Stamp buttons placeholder */}
-        <div className="stamp-buttons">
-          <button onClick={() => handleDownload('png')} disabled={isDownloading}>
-            PNG
-          </button>
-          <button onClick={() => handleDownload('jpeg')} disabled={isDownloading}>
-            JPEG
-          </button>
-        </div>
+        {/* Checkmark when complete */}
+        {downloadComplete && (
+          <div className="checkmark-overlay">
+            <svg viewBox="0 0 52 52" className="checkmark">
+              <circle cx="26" cy="26" r="25" fill="none"/>
+              <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+          </div>
+        )}
       </div>
 
-      {/* Status messages */}
+      <div className="stamp-buttons">
+        <button
+          onClick={() => handleDownload('png')}
+          disabled={isDownloading}
+          className="stamp-btn png-stamp"
+          aria-label="Download as PNG"
+        >
+          <div className="stamp-border">
+            <div className="stamp-content">
+              <span className="stamp-text">PNG</span>
+              <div className="postmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </button>
+
+        <button
+          onClick={() => handleDownload('jpeg')}
+          disabled={isDownloading}
+          className="stamp-btn jpeg-stamp"
+          aria-label="Download as JPEG"
+        >
+          <div className="stamp-border">
+            <div className="stamp-content">
+              <span className="stamp-text">JPEG</span>
+              <div className="postmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+
       {isDownloading && <p>⏳ Downloading...</p>}
       {downloadComplete && <p>✅ Download complete!</p>}
 
@@ -82,80 +110,119 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
           padding: 2rem;
           text-align: center;
         }
-        button {
-          margin: 0 0.5rem;
-          padding: 0.5rem 1rem;
-          cursor: pointer;
+
+        .wax-seal {
+          position: relative;
+          width: 120px;
+          height: 120px;
+          margin: 0 auto 2rem;
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-          .wax-seal {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 2rem;
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
 
-.wax-seal.sealed {
-  transform: rotate(360deg) scale(1.1);
-}
+        .wax-seal.sealed {
+          transform: rotate(360deg) scale(1.1);
+        }
 
-.seal-stamp {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 4px 8px rgba(139, 21, 56, 0.4));
-  transition: transform 0.3s ease;
-}
+        .seal-stamp {
+          width: 100%;
+          height: 100%;
+          filter: drop-shadow(0 4px 8px rgba(139, 21, 56, 0.4));
+          transition: transform 0.3s ease;
+        }
 
-.wax-seal:hover .seal-stamp {
-  transform: scale(1.05) rotate(-5deg);
-}
+        .wax-seal:hover .seal-stamp {
+          transform: scale(1.05) rotate(-5deg);
+        }
 
-.checkmark-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease-in;
-}
+        .checkmark-overlay {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: fadeIn 0.3s ease-in;
+        }
 
-.checkmark {
-  width: 60px;
-  height: 60px;
-  stroke: #FFF;
-  stroke-width: 3;
-  stroke-miterlimit: 10;
-  animation: checkmark 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-}
+        .checkmark {
+          width: 60px;
+          height: 60px;
+          stroke: #FFF;
+          stroke-width: 3;
+          stroke-miterlimit: 10;
+        }
 
-.checkmark circle {
-  stroke-dasharray: 166;
-  stroke-dashoffset: 166;
-  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-}
+        .stamp-buttons {
+          display: flex;
+          gap: 1.5rem;
+          justify-content: center;
+          z-index: 2;
+        }
 
-.checkmark path {
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.3s forwards;
-}
+        .stamp-btn {
+          position: relative;
+          padding: 0;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          font-family: 'Courier New', monospace;
+        }
 
-@keyframes stroke {
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
+        .stamp-btn:hover:not(:disabled) {
+          transform: translateY(-4px) rotate(-2deg);
+        }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+        .stamp-btn:active:not(:disabled) {
+          transform: translateY(0) rotate(0deg);
+        }
+
+        .stamp-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .stamp-border {
+          position: relative;
+          padding: 4px;
+          background: linear-gradient(135deg, #8B1538 0%, #A01D48 100%);
+          filter: drop-shadow(0 4px 6px rgba(139, 21, 56, 0.3));
+        }
+
+        .stamp-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          width: 100px;
+          height: 100px;
+          background: linear-gradient(135deg, #FFF5F7 0%, #FFE8EC 100%);
+          color: #8B1538;
+        }
+
+        .stamp-text {
+          font-size: 1.25rem;
+          font-weight: bold;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+
+        .postmark {
+          width: 24px;
+          height: 24px;
+          opacity: 0.7;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
       `}</style>
     </div>
   );
