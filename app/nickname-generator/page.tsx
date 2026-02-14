@@ -8,10 +8,18 @@ export default function NicknameGeneratorPage() {
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
   const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleGenerate() {
+  async function handleGenerate() {
+    setIsLoading(true);
+
+    // small delay to show loading animation (UI only)
+    await new Promise((resolve) => setTimeout(resolve, 600));
+
     const nickname = generateCoupleNickname(name1, name2);
     setResult(nickname);
+
+    setIsLoading(false);
   }
 
   return (
@@ -46,9 +54,18 @@ export default function NicknameGeneratorPage() {
         {/* Button */}
         <button
           onClick={handleGenerate}
-          className="w-full p-3 rounded-lg bg-pink-500 hover:bg-pink-600 transition"
+          disabled={isLoading}
+          className="w-full p-3 rounded-lg bg-pink-500 hover:bg-pink-600 transition
+          disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          Generate Nickname
+          {isLoading ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              Generating...
+            </>
+          ) : (
+            "Generate Nickname"
+          )}
         </button>
 
         {/* Result */}
