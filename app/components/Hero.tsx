@@ -128,6 +128,7 @@ const Hero = () => {
 
             {/* EXPLORE BUTTON */}
             <motion.button
+              onClick={() => router.push("/algorithms")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-white border border-pink-200 rounded-xl text-gray-700 font-semibold text-lg shadow-sm hover:bg-pink-50 hover:border-pink-300 transition-all flex items-center gap-2 justify-center"
