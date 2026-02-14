@@ -113,6 +113,14 @@ export default function Home() {
   color: "from-pink-500 to-rose-500",
   path: "/spin-the-wheel",
 },
+{
+  id: "love-doctor",
+  title: "Love Doctor",
+  description: "Get personalized advice and insights to improve your relationship",
+  icon: Heart,
+  color: "from-purple-500 to-pink-500",
+  path: "/love-doctor",
+}
 
   ];
 
