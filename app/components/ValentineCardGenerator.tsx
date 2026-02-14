@@ -27,6 +27,14 @@ export default function ValentineCardGenerator() {
   const [showEmoji, setShowEmoji] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
+  const [showSocialCopied, setShowSocialCopied] = useState(false);
+
+  /* AUDIO STATE */
+
+const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+const [audioURL, setAudioURL] = useState<string | null>(null);
+const [isRecording, setIsRecording] = useState(false);
+const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
 
   /* AUDIO */
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -127,6 +135,55 @@ const handleCopyLink = async()=>{
   }
 };
 
+  /* ---------------- SOCIAL MEDIA SHARE ---------------- */
+
+const getEncodedMessage = () => {
+  const fullMessage = `Dear ${recipient || "Someone Special"},\n\n${message}\n\nWith Love ❤️`;
+  return encodeURIComponent(fullMessage);
+};
+
+const handleWhatsAppShare = () => {
+  if (!message.trim()) return;
+  const url = `https://wa.me/?text=${getEncodedMessage()}`;
+  window.open(url, "_blank");
+};
+
+const handleTwitterShare = () => {
+  if (!message.trim()) return;
+  const url = `https://twitter.com/intent/tweet?text=${getEncodedMessage()}`;
+  window.open(url, "_blank");
+};
+
+const handleInstagramCopy = async () => {
+  if (!message.trim()) return;
+
+  try {
+    const fullMessage = `Dear ${recipient || "Someone Special"},\n\n${message}\n\nWith Love ❤️`;
+    await navigator.clipboard.writeText(fullMessage);
+
+    setShowSocialCopied(true);
+    setTimeout(() => setShowSocialCopied(false), 2000);
+  } catch {
+    alert("Failed to copy message");
+  }
+};
+
+/* Optional: Mobile Web Share API */
+const handleNativeShare = async () => {
+  if (!message.trim()) return;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Valentine Card 💖",
+        text: `Dear ${recipient || "Someone Special"},\n\n${message}`,
+      });
+    } catch {}
+  }
+};
+
+
+/* ---------------- CARD IMAGE DOM ---------------- */
 /* ---------------- DOWNLOAD CARD DOM ---------------- */
 
 const createDownloadCard = ()=>{
@@ -358,6 +415,44 @@ Send <Send/>
 <p className="mb-8 text-gray-600">Choose how to share it</p>
 
 <div className="grid grid-cols-2 gap-4">
+
+  <button onClick={handleDownloadPDF} className="border p-6 rounded"><FileText/> PDF</button>
+
+
+
+  <button
+  onClick={handleWhatsAppShare}
+  disabled={!message.trim()}
+  className="border p-6 rounded hover:bg-green-50 disabled:opacity-50 transition"
+>
+  💬 WhatsApp
+</button>
+
+<button
+  onClick={handleTwitterShare}
+  disabled={!message.trim()}
+  className="border p-6 rounded hover:bg-gray-100 disabled:opacity-50 transition"
+>
+  🐦 Twitter (X)
+</button>
+
+<button
+  onClick={handleInstagramCopy}
+  disabled={!message.trim()}
+  className="border p-6 rounded hover:bg-pink-50 disabled:opacity-50 transition"
+>
+  {showSocialCopied ? "✅ Copied!" : "📸 Instagram Caption"}
+</button>
+
+{typeof navigator !== "undefined" && navigator.share && (
+  <button
+    onClick={handleNativeShare}
+    className="border p-6 rounded hover:bg-red-50 transition"
+  >
+    📱 Share (Mobile)
+  </button>
+)}
+
 
 <button onClick={handleEmail} className="border p-6 rounded"><Mail/> Email</button>
 
