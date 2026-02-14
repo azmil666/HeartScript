@@ -290,14 +290,14 @@ export default function ValentineCardGenerator() {
 
 function Step({ number, label, active }: any){
   return(
-    <div className="flex flex-col items-center gap-2 bg-[#FFFBF7] px-2">
+    <div className="flex flex-col items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-2 rounded-lg">
 
       <div className={`w-8 h-8 rounded-full flex items-center justify-center
       ${active ? "bg-[#800020] text-white" : "bg-gray-200 text-gray-500"}`}>
         {number}
       </div>
 
-      <span className={`${active ? "text-[#800020] font-bold" : ""}`}>
+      <span className={`${active ? "text-[#800020] font-bold" : "text-gray-600"}`}>
         {label}
       </span>
 
