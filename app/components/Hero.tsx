@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Heart, Code2, PenTool, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+
 const Hero = () => {
   const router = useRouter();
 

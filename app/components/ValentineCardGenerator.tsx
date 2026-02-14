@@ -121,8 +121,44 @@ export default function ValentineCardGenerator() {
     return card;
   };
 
-  const handleEmail = () => {
-    alert("Email feature - Coming soon!");
+  const handleEmail = async () => {
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      
+      // Create temporary download card
+      const downloadCard = createDownloadCard();
+      document.body.appendChild(downloadCard);
+      
+      const canvas = await html2canvas(downloadCard, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
+      
+      document.body.removeChild(downloadCard);
+      
+      const imageData = canvas.toDataURL('image/png');
+      
+      // Create mailto link with image as attachment (note: this has limitations)
+      const subject = encodeURIComponent(`Valentine Card for ${recipient}`);
+      const body = encodeURIComponent(
+        `Dear ${recipient},\n\n${message}\n\nWith Love ❤️\n\nNote: Please find the attached valentine card image.`
+      );
+      
+      // Open email client
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      
+      // Also download the image for manual attachment
+      const link = document.createElement('a');
+      link.download = `valentine-card-${recipient || 'card'}.png`;
+      link.href = imageData;
+      link.click();
+      
+      alert('Email client opened! The card image has been downloaded. Please attach it manually to your email.');
+    } catch (error) {
+      console.error('Email failed:', error);
+      alert('Failed to prepare email. Please try again.');
+    }
   };
 
   return (
