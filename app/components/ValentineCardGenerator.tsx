@@ -28,6 +28,13 @@ export default function ValentineCardGenerator() {
   const [showEmoji, setShowEmoji] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
+  /* AUDIO STATE */
+
+const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+const [audioURL, setAudioURL] = useState<string | null>(null);
+const [isRecording, setIsRecording] = useState(false);
+const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+
 
   const stickerOptions = ["❤️","🌹","⭐","💖","💘","✨","🎀","💐"];
 
@@ -56,6 +63,72 @@ const generateRandomQuote = ()=>{
   const randomIndex = Math.floor(Math.random()*loveQuotes.length);
   setMessage(loveQuotes[randomIndex]);
 };
+
+/* AUDIO RECORDING */
+
+const startRecording = async () => {
+
+  try {
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    const recorder = new MediaRecorder(stream);
+
+    const chunks: BlobPart[] = [];
+
+    recorder.ondataavailable = e => chunks.push(e.data);
+
+    recorder.onstop = () => {
+
+      const blob = new Blob(chunks, { type: "audio/webm" });
+
+      setAudioBlob(blob);
+
+      setAudioURL(URL.createObjectURL(blob));
+
+    };
+
+    recorder.start();
+
+    setMediaRecorder(recorder);
+
+    setIsRecording(true);
+
+  } catch {
+
+    alert("Microphone permission denied");
+
+  }
+};
+
+const stopRecording = () => {
+
+  if (mediaRecorder) {
+
+    mediaRecorder.stop();
+
+    setIsRecording(false);
+
+  }
+};
+
+/* AUDIO UPLOAD */
+
+const handleAudioUpload =
+(e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const file = e.target.files?.[0];
+
+  if (file) {
+
+    setAudioBlob(file);
+
+    setAudioURL(URL.createObjectURL(file));
+
+  }
+};
+
 
 /* ---------------- SHARE LINK ---------------- */
 
@@ -211,7 +284,67 @@ className="px-4 py-4 border rounded"/>
 <textarea value={message} onChange={e=>setMessage(e.target.value)}
 rows={5}
 placeholder="Your Message"
-className="px-4 py-4 border rounded"/>
+className="px-4 py-4 border-2 rounded-lg resize-none"/>
+
+{/* AUDIO SECTION */}
+
+<div className="flex flex-col gap-3 border rounded-xl p-4">
+
+<label className="font-semibold text-gray-700">
+🎤 Voice Message
+</label>
+
+<div className="flex gap-3 flex-wrap">
+
+<button
+onClick={startRecording}
+disabled={isRecording}
+className="px-4 py-2 bg-red-500 text-white rounded disabled:opacity-50">
+🎙 Record
+</button>
+
+<button
+onClick={stopRecording}
+disabled={!isRecording}
+className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">
+⏹ Stop
+</button>
+
+<label className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">
+📁 Upload
+<input
+type="file"
+accept="audio/*"
+onChange={handleAudioUpload}
+className="hidden"
+/>
+</label>
+
+</div>
+
+{audioURL && (
+<audio controls className="w-full mt-2">
+<source src={audioURL} />
+</audio>
+)}
+
+</div>
+
+{/* emoji */}
+<div className="relative">
+<button onClick={()=>setShowEmoji(!showEmoji)} className="text-2xl">😊</button>
+{showEmoji&&(
+<div className="absolute z-50 bg-white border rounded-xl p-3 shadow">
+<div className="grid grid-cols-6 gap-1">
+{["❤️","😍","💕","💖","🌹","✨","💌"].map(e=>(
+<button key={e} onClick={()=>{setMessage(p=>p+e);setShowEmoji(false);}}>
+{e}
+</button>
+))}
+</div>
+</div>
+)}
+</div>
 
 <select value={theme} onChange={e=>setTheme(e.target.value)} className="px-4 py-3 border rounded">
 <option value="romantic">Romantic</option>
