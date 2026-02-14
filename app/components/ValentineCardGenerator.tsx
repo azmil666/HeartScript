@@ -2,6 +2,16 @@
 
 import { useState } from "react";
 import CardPreview from "./CardPreview";
+import {
+  Download,
+  FileText,
+  Mail,
+  Heart,
+  ArrowLeft,
+  Send,
+  Copy,
+  Check,
+} from "lucide-react";
 
 /* ---------------- LOVE QUOTES ---------------- */
 const loveQuotes: string[] = [
@@ -21,14 +31,10 @@ export default function ValentineCardGenerator() {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [theme, setTheme] = useState("romantic");
-  const [alignment, setAlignment] = useState<"left" | "center" | "right">("center");
+  const [alignment, setAlignment] =
+    useState<"left" | "center" | "right">("center");
   const [font, setFont] = useState("serif");
   const [error, setError] = useState<string | null>(null);
-
-  const [stickers, setStickers] = useState<
-    { id: number; x: number; y: number; emoji: string }[]
-  >([]);
-
   const [showCopied, setShowCopied] = useState(false);
 
   /* ---------------- VALIDATION ---------------- */
@@ -60,7 +66,6 @@ export default function ValentineCardGenerator() {
     setTheme("romantic");
     setAlignment("center");
     setFont("serif");
-    setStickers([]);
     setError(null);
   };
 
@@ -70,9 +75,16 @@ export default function ValentineCardGenerator() {
     setError(null);
   };
 
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
+  };
+
   /* ---------------- UI ---------------- */
   return (
     <main className="flex flex-col items-center px-4 py-8 w-full max-w-6xl mx-auto min-h-screen">
+      {/* STEP 1 */}
       {step === 1 && (
         <div className="grid lg:grid-cols-2 gap-12 w-full">
           <div className="flex flex-col gap-6">
@@ -128,16 +140,12 @@ export default function ValentineCardGenerator() {
             {error && <p className="text-sm text-red-500">{error}</p>}
 
             <div className="flex gap-4">
-          <button
-  onClick={() => {
-    if (confirm("Are you sure you want to reset your card?")) {
-      handleReset();
-    }
-  }}
-  className="flex-1 border py-3 rounded"
->
-  Reset Card
-</button>
+              <button
+                onClick={handleReset}
+                className="flex-1 border py-3 rounded"
+              >
+                Reset Card
+              </button>
 
               <button
                 onClick={() => validateStepOne() && setStep(2)}
@@ -149,36 +157,92 @@ export default function ValentineCardGenerator() {
           </div>
 
           <CardPreview
-            {...{ recipient, message, theme, alignment, font, stickers }}
+            {...{ recipient, message, theme, alignment, font }}
           />
         </div>
       )}
 
-      {/* STEP 3 – Disabled action tooltips */}
+      {/* STEP 2 */}
+      {step === 2 && (
+        <div className="text-center">
+          <CardPreview
+            {...{ recipient, message, theme, alignment, font }}
+          />
+
+          <div className="flex gap-4 justify-center mt-8">
+            <button
+              onClick={() => setStep(1)}
+              className="flex items-center gap-2 border px-6 py-3"
+            >
+              <ArrowLeft />
+              Back
+            </button>
+
+            <button
+              onClick={() => setStep(3)}
+              className="flex items-center gap-2 bg-[#800020] text-white px-6 py-3"
+            >
+              <Send />
+              Send Card
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3 */}
       {step === 3 && (
-        <div className="grid grid-cols-2 gap-4 max-w-xl">
-          <button
-            disabled={!message.trim()}
-            title={!message.trim() ? "Add a message to enable WhatsApp sharing" : ""}
-            className="border p-6 rounded disabled:opacity-50"
-          >
-            💬 WhatsApp
-          </button>
+        <div className="text-center max-w-xl">
+          <Heart className="mx-auto w-12 h-12 text-[#800020] mb-4 animate-pulse" />
+
+          <h2 className="text-3xl font-bold mb-2">Send Your Card</h2>
+          <p className="mb-8 text-gray-600">Choose how to share it</p>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              disabled={!message.trim()}
+              title={!message.trim() ? "Add a message to enable WhatsApp sharing" : ""}
+              className="border p-6 rounded disabled:opacity-50"
+            >
+              💬 WhatsApp
+            </button>
+
+            <button
+              disabled={!message.trim()}
+              title={!message.trim() ? "Write a message to share on Twitter" : ""}
+              className="border p-6 rounded disabled:opacity-50"
+            >
+              🐦 Twitter (X)
+            </button>
+
+            <button
+              onClick={handleCopyLink}
+              className="flex items-center gap-2 border p-6 rounded"
+            >
+              {showCopied ? <Check /> : <Copy />}
+              {showCopied ? "Copied!" : "Copy Share Link"}
+            </button>
+
+            <button className="flex items-center gap-2 border p-6 rounded">
+              <Mail />
+              Email
+            </button>
+
+            <button className="flex items-center gap-2 border p-6 rounded">
+              <Download />
+              PNG
+            </button>
+
+            <button className="flex items-center gap-2 border p-6 rounded">
+              <FileText />
+              PDF
+            </button>
+          </div>
 
           <button
-            disabled={!message.trim()}
-            title={!message.trim() ? "Write a message to share on Twitter" : ""}
-            className="border p-6 rounded disabled:opacity-50"
+            onClick={() => setStep(2)}
+            className="mt-8 underline"
           >
-            🐦 Twitter (X)
-          </button>
-
-          <button
-            disabled={!message.trim()}
-            title={!message.trim() ? "Add a message to copy an Instagram caption" : ""}
-            className="border p-6 rounded disabled:opacity-50"
-          >
-            📸 Instagram Caption
+            ← Back
           </button>
         </div>
       )}
