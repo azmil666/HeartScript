@@ -15,46 +15,88 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadComplete, setDownloadComplete] = useState(false);
 
-  // Download handler will be implemented in next commit
   const handleDownload = async (format: 'png' | 'jpeg') => {
-    console.log(`Download ${format} requested`);
-    // Implementation coming next
+    setIsDownloading(true);
+    setDownloadComplete(false);
+
+    try {
+      const cardElement = document.getElementById(cardElementId);
+
+      if (!cardElement) {
+        throw new Error('Card element not found');
+      }
+
+      const canvas = await html2canvas(cardElement, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null,
+        logging: false,
+        imageTimeout: 0,
+      });
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            throw new Error('Failed to create image');
+          }
+
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          const timestamp = new Date().toISOString().split('T')[0];
+
+          link.download = `${cardTitle}-${timestamp}.${format}`;
+          link.href = url;
+          link.click();
+
+          URL.revokeObjectURL(url);
+
+          setDownloadComplete(true);
+
+          setTimeout(() => {
+            setIsDownloading(false);
+            setDownloadComplete(false);
+          }, 2000);
+        },
+        format === 'png' ? 'image/png' : 'image/jpeg',
+        0.95
+      );
+    } catch (error) {
+      console.error('Download failed:', error);
+      setIsDownloading(false);
+      alert('Failed to download card. Please try again.');
+    }
   };
 
   return (
     <div className="download-container">
       <div className={`wax-seal ${downloadComplete ? 'sealed' : ''}`}>
-        <svg 
-          viewBox="0 0 100 100" 
+        <svg
+          viewBox="0 0 100 100"
           className="seal-stamp"
           style={{
             filter: downloadComplete ? 'none' : 'grayscale(0.3)',
           }}
         >
-          {/* Wax seal outer circle */}
-          <circle cx="50" cy="50" r="48" fill="#8B1538" opacity="0.9"/>
-          <circle cx="50" cy="50" r="45" fill="#A01D48"/>
-          
-          {/* Heart emboss */}
+          <circle cx="50" cy="50" r="48" fill="#8B1538" opacity="0.9" />
+          <circle cx="50" cy="50" r="45" fill="#A01D48" />
+
           <path
             d="M50 65 Q35 55 35 45 Q35 35 45 35 Q50 40 50 40 Q50 40 55 35 Q65 35 65 45 Q65 55 50 65"
             fill="#8B1538"
             stroke="#6B0F2A"
             strokeWidth="1"
           />
-          
-          {/* Wax drips */}
-          <ellipse cx="30" cy="90" rx="8" ry="4" fill="#8B1538" opacity="0.6"/>
-          <ellipse cx="70" cy="88" rx="6" ry="3" fill="#8B1538" opacity="0.6"/>
-          <ellipse cx="50" cy="92" rx="7" ry="4" fill="#8B1538" opacity="0.6"/>
+
+          <ellipse cx="30" cy="90" rx="8" ry="4" fill="#8B1538" opacity="0.6" />
+          <ellipse cx="70" cy="88" rx="6" ry="3" fill="#8B1538" opacity="0.6" />
+          <ellipse cx="50" cy="92" rx="7" ry="4" fill="#8B1538" opacity="0.6" />
         </svg>
 
-        {/* Checkmark when complete */}
         {downloadComplete && (
           <div className="checkmark-overlay">
             <svg viewBox="0 0 52 52" className="checkmark">
-              <circle cx="26" cy="26" r="25" fill="none"/>
-              <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+              <circle cx="26" cy="26" r="25" fill="none" />
+              <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
             </svg>
           </div>
         )}
@@ -72,9 +114,9 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
               <span className="stamp-text">PNG</span>
               <div className="postmark">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
               </div>
             </div>
@@ -92,9 +134,9 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
               <span className="stamp-text">JPEG</span>
               <div className="postmark">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
               </div>
             </div>
@@ -148,7 +190,6 @@ export const CardDownloadButton: React.FC<CardDownloadButtonProps> = ({
           height: 60px;
           stroke: #FFF;
           stroke-width: 3;
-          stroke-miterlimit: 10;
         }
 
         .stamp-buttons {
