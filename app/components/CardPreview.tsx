@@ -59,8 +59,13 @@ export default function CardPreview({
           hover:shadow-[0_0_80px_rgba(244,63,94,0.45)]"
         >
 
-          {/* gradient theme */}
-          <div className={`absolute inset-0 ${themeStyles[theme]}`} />
+          {/* THEME BACKGROUND WITH SMOOTH TRANSITION */}
+          <div className="absolute inset-0">
+            <div
+              key={theme}
+              className={`absolute inset-0 ${themeStyles[theme]} animate-themeFade`}
+            />
+          </div>
 
           {/* dots overlay */}
           <div className="absolute inset-0 opacity-15 dots-overlay" />
@@ -84,7 +89,7 @@ export default function CardPreview({
 
             {/* message */}
             <p
-              style={{ fontFamily: font }}   // ✅ YOUR FEATURE APPLIED HERE
+              style={{ fontFamily: font }}
               className="mt-5 text-base opacity-95 leading-relaxed max-w-xs"
             >
               {message ||
