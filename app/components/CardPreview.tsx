@@ -83,34 +83,32 @@ export default function CardPreview({
             />
           </div>
 
+          {/* Decorative hearts floating */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <span className="absolute top-4 left-4 text-white/20 text-2xl animate-pulse">💕</span>
+            <span className="absolute top-8 right-8 text-white/20 text-xl animate-pulse [animation-delay:0.5s]">💖</span>
+            <span className="absolute bottom-16 left-8 text-white/20 text-lg animate-pulse [animation-delay:1s]">💗</span>
+            <span className="absolute bottom-8 right-4 text-white/20 text-2xl animate-pulse [animation-delay:1.5s]">💘</span>
+          </div>
+
           {/* dots overlay */}
           <div className="absolute inset-0 opacity-15 dots-overlay" />
+
+          {/* Border decoration */}
+          <div className="absolute inset-3 border border-white/20 rounded-lg pointer-events-none" />
 
           {/* content */}
           <div
             className={`absolute inset-0 flex flex-col justify-center text-white px-8 py-10 ${alignmentClasses[alignment]}`}
           >
 
-            {/* heart */}
-            <motion.div
-  className="mb-5 text-3xl"
-  animate={{
-    y: [0, -10, 0]
-  }}
-  transition={{
-    duration: 2,
-    repeat: Infinity,
-    ease: "easeInOut"
-  }}
->
-  ❤️
-</motion.div>
-
+            {/* heart with glow */}
+            <div className="mb-5 text-4xl animate-bounce filter drop-shadow-lg">❤️</div>
 
             {/* recipient */}
-            <h2 className="font-serif text-3xl md:text-4xl font-bold leading-snug">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold leading-snug drop-shadow-md">
               Dear{" "}
-              <span className="italic underline decoration-rose-200 underline-offset-4">
+              <span className="italic underline decoration-rose-200 underline-offset-4 drop-shadow-sm">
                 {recipient || "Someone Special"}
               </span>
               ,
@@ -119,13 +117,16 @@ export default function CardPreview({
             {/* message */}
             <p
               style={{ fontFamily: font }}
-              className="mt-5 text-base opacity-95 leading-relaxed max-w-xs"
+              className="mt-5 text-base opacity-95 leading-relaxed max-w-xs drop-shadow-sm"
             >
               {message ||
                 "Your beautiful message will appear here... Type in the box to see the magic happen."}
             </p>
 
-            <div className="italic text-xl mt-6">With Love ✨</div>
+            {/* Decorative line */}
+            <div className="w-16 h-0.5 bg-white/30 mx-auto my-4 rounded-full" />
+
+            <div className="italic text-xl mt-2 drop-shadow-md">With Love ✨</div>
 
           </div>
         </motion.div>
