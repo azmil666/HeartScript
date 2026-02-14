@@ -1,4 +1,6 @@
 "use client";
+import { motion } from "framer-motion";
+
 
 interface Props {
   recipient: string;
@@ -38,12 +40,22 @@ export default function CardPreview({
       </div>
 
       {/* glass container */}
-      <div
-        data-card-preview
-        className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-xl border border-white/40 p-8 rounded-2xl shadow-xl
-        transition-all duration-500
-        hover:shadow-[0_0_60px_rgba(244,63,94,0.35)]"
-      >
+      <motion.div
+  data-card-preview
+  initial={{ opacity: 0, scale: 0.9, y: 40 }}
+  animate={{ opacity: 1, scale: 1, y: 0 }}
+  transition={{
+    duration: 0.6,
+    ease: "easeOut"
+  }}
+  whileHover={{
+    scale: 1.03
+  }}
+  className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-xl border border-white/40 p-8 rounded-2xl shadow-xl
+  transition-all duration-500
+  hover:shadow-[0_0_60px_rgba(244,63,94,0.35)]"
+>
+
 
         {/* title */}
         <h3 className="text-center text-xs tracking-[0.25em] text-gray-500 font-semibold mb-6">
@@ -51,8 +63,12 @@ export default function CardPreview({
         </h3>
 
         {/* card */}
-        <div
-          data-card-inner
+        <motion.div
+  data-card-inner
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.5 }}
+
           className="relative aspect-[4/5] rounded-xl overflow-hidden shadow-2xl
           transition-all duration-500
           shadow-[0_0_40px_rgba(244,63,94,0.18)]
@@ -76,7 +92,20 @@ export default function CardPreview({
           >
 
             {/* heart */}
-            <div className="mb-5 text-3xl animate-bounce">❤️</div>
+            <motion.div
+  className="mb-5 text-3xl"
+  animate={{
+    y: [0, -10, 0]
+  }}
+  transition={{
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }}
+>
+  ❤️
+</motion.div>
+
 
             {/* recipient */}
             <h2 className="font-serif text-3xl md:text-4xl font-bold leading-snug">
@@ -99,8 +128,8 @@ export default function CardPreview({
             <div className="italic text-xl mt-6">With Love ✨</div>
 
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

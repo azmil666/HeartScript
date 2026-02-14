@@ -22,6 +22,7 @@ export default function ValentineCardGenerator() {
     setFont("serif");
   };
 
+
   const createDownloadCard = () => {
     const themeGradients: Record<string,string> = {
       romantic:"linear-gradient(135deg,#ec4899,#f43f5e,#800020)",
@@ -72,6 +73,33 @@ export default function ValentineCardGenerator() {
       </div>
     `;
     return card;
+  };
+
+
+  const handleEmail = async () => {
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const downloadCard = createDownloadCard();
+      document.body.appendChild(downloadCard);
+
+      const canvas = await html2canvas(downloadCard, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        logging: false,
+      });
+
+      document.body.removeChild(downloadCard);
+
+      const subject = encodeURIComponent(`Valentine Card for ${recipient}`);
+      const body = encodeURIComponent(
+        `Dear ${recipient},\n\n${message}\n\nWith Love ❤️`
+      );
+
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    } catch (error) {
+      console.error("Email failed:", error);
+      alert("Failed to prepare email.");
+    }
   };
 
   const handleDownloadImage = async () => {
@@ -234,24 +262,26 @@ export default function ValentineCardGenerator() {
       )}
 
       {/* STEP 3 */}
-      {step===3 && (
-        <div className="text-center">
+      {step === 3 && (
+        <div className="w-full max-w-4xl text-center">
+          <h1 className="font-display text-5xl font-bold text-gray-900 mb-6">
+            Share Your Love
+          </h1>
 
-          <div className="flex justify-center mb-6">
-            <Heart className="w-10 h-10 text-[#800020] animate-pulse"/>
-          </div>
-
-          <div className="flex gap-6 flex-wrap justify-center">
-            <button onClick={handleDownloadImage} className="p-6 border rounded-xl">
-              <Download className="mx-auto mb-2"/> PNG
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <button onClick={handleDownloadImage} className="p-8 border rounded-xl hover:bg-gray-50">
+              <Download size={40} className="mx-auto mb-2" />
+              <p className="font-semibold">Download PNG</p>
             </button>
 
-            <button onClick={handleDownloadPDF} className="p-6 border rounded-xl">
-              <FileText className="mx-auto mb-2"/> PDF
+            <button onClick={handleDownloadPDF} className="p-8 border rounded-xl hover:bg-gray-50">
+              <FileText size={40} className="mx-auto mb-2" />
+              <p className="font-semibold">Download PDF</p>
             </button>
 
-            <button onClick={()=>setStep(1)} className="p-6 border rounded-xl">
-              <ArrowLeft className="mx-auto mb-2"/> Edit
+            <button onClick={handleEmail} className="p-8 border rounded-xl hover:bg-gray-50">
+              <Mail size={40} className="mx-auto mb-2" />
+              <p className="font-semibold">Email</p>
             </button>
           </div>
         </div>
