@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import React from "react";
 
 interface Props {
+  id?: string;
   recipient: string;
   message: string;
   theme: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 function CardPreview({
+  id,
   recipient,
   message,
   theme,
@@ -35,7 +37,7 @@ function CardPreview({
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-[520px] w-full">
+    <div id={id} className="relative flex items-center justify-center min-h-[520px] w-full">
 
       {/* glow blobs */}
       <div className="absolute inset-0 z-0 pointer-events-none">

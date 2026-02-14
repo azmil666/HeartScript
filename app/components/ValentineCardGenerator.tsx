@@ -119,6 +119,22 @@ export default function ValentineCardGenerator() {
     setTimeout(() => setShowCopied(false), 2000);
   };
 
+  const handleWhatsAppShare = () => {
+    const text = `Check out this Valentine card I made for ${recipient}! ${message}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const handleTwitterShare = () => {
+    const text = `Check out this Valentine card I made for ${recipient}! ${message}`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const handleEmailShare = () => {
+    const subject = `Happy Valentine's Day, ${recipient}!`;
+    const body = message;
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const moveSticker = (id: number, x: number, y: number) => {
     setStickers((prev) =>
       prev.map((s) => (s.id === id ? { ...s, x, y } : s))
@@ -260,6 +276,7 @@ className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100
           </div>
 
           <CardPreview
+            id="valentine-card-preview"
             {...{ recipient, message, theme, alignment, font }}
             stickers={stickers}
             moveSticker={moveSticker}
@@ -280,6 +297,7 @@ className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100
   </div>
 
   <CardPreview
+    id="valentine-card-preview"
     {...{ recipient, message, theme, alignment, font }}
     stickers={stickers}
     moveSticker={moveSticker}
@@ -324,17 +342,19 @@ className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100
 
           <div className="grid grid-cols-2 gap-4">
             <button
+              onClick={handleWhatsAppShare}
               disabled={!message.trim()}
               title={!message.trim() ? "Add a message to enable WhatsApp sharing" : ""}
-              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink-50"
             >
               💬 WhatsApp
             </button>
 
             <button
+              onClick={handleTwitterShare}
               disabled={!message.trim()}
               title={!message.trim() ? "Write a message to share on Twitter" : ""}
-              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border p-6 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink-50"
             >
               🐦 Twitter (X)
             </button>
@@ -347,7 +367,10 @@ className="absolute bottom-3 right-3 text-2xl p-2 rounded-full hover:bg-pink-100
               {showCopied ? "Copied!" : "Copy Share Link"}
             </button>
 
-            <button className="flex items-center gap-2 border p-6 rounded">
+            <button 
+              onClick={handleEmailShare}
+              className="flex items-center gap-2 border p-6 rounded hover:bg-pink-50"
+            >
               <Mail />
               Email
             </button>

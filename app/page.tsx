@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Search, Music2, VolumeX } from "lucide-react";
+import { Heart, Target, Calculator, Flame, MessageCircle, Sparkles, PenTool, Rose, Search, Music2, VolumeX, Smile } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import FloatingHearts from "./algorithms/flames/FloatingHearts";
@@ -10,7 +10,7 @@ export default function Home() {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
