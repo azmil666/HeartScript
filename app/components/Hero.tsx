@@ -45,12 +45,12 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#fff0f5] selection:bg-pink-200">
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-transparent selection:bg-pink-200">
       
       {/* Background */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-pink-300/30 blur-[120px] rounded-full mix-blend-multiply animate-pulse" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-red-200/30 blur-[100px] rounded-full mix-blend-multiply animate-pulse delay-1000" />
+        <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-pink-300/20 blur-[120px] rounded-full mix-blend-multiply animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-red-200/20 blur-[100px] rounded-full mix-blend-multiply animate-pulse delay-1000" />
       </div>
 
       {/* Floating Hearts */}
