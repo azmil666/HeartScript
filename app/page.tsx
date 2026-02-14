@@ -74,15 +74,15 @@ export default function Home() {
       title: "Meet2Marry Date",
       description: "Discover your destined date to marry based on your Meeting Date",
       icon: Rose,
-      color: "from-blue-500 to-red-500",
+      color: "from-[#F875AA] to-[#FF8FB7]",
       path: "/marry",
     },
     {
       id: "truth-or-dare",
       title: "Truth or Dare",
-      description: "A Valentine’s twist on Truth or Dare with sweet questions and romantic challenges made to bring you closer. 💘",
+      description: "A Valentine’s twist on Truth or Dare with sweet questions and romantic challenges made to bring you closer",
       icon: PenTool,
-      color: "from-red-500 to-pink-500",
+      color: "from-[#F875AA] to-[#FF8FB7]",
       path: "/truth-or-dare",
     },
     {
@@ -90,15 +90,15 @@ export default function Home() {
       title: "Drake Equation",
       description: "Calculate your potential soulmates using Drake Equation",
       icon: Search,
-      color: "from-indigo-500 to-purple-500",
+      color: "from-[#F875AA] to-[#FF8FB7]",
       path: "/drake-equation",
     },
     {
       id: "love-quiz",
       title: "Love Quiz",
-      description: "Answer romantic questions and discover your love compatibility score 💕",
+      description: "Answer romantic questions and discover your love compatibility score ",
       icon: Heart,
-      color: "from-rose-500 to-pink-500",
+      color: "from-[#F875AA] to-[#FF8FB7]",
       path: "/love-quiz",
     },
     {
@@ -171,10 +171,22 @@ export default function Home() {
       </motion.button>
 
       <FloatingHearts />
+<<<<<<< ui-enhancements
+      
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-pink-300/20 blur-[120px] rounded-full mix-blend-multiply animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-red-200/20 blur-[100px] rounded-full mix-blend-multiply animate-pulse delay-1000" />
+      </div>
+
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        
+        
+=======
 
       <div className="container mx-auto px-4 py-16 relative z-10">
 
         {/* Header */}
+>>>>>>> main
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -188,6 +200,67 @@ export default function Home() {
           </p>
         </motion.div>
 
+<<<<<<< ui-enhancements
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {algorithms.map((algo, index) => (
+            <motion.div
+              key={algo.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => router.push(algo.path)}
+              className="group cursor-pointer"
+            >
+              <div className="relative h-full bg-[#] backdrop-blur-sm rounded-2xl shadow-lg hover:bg-[#FFE4EF] hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50">
+                
+                
+                <div className={`absolute inset-0 bg-gradient-to-br ${algo.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                
+                
+                <div className="relative p-8">
+                  
+                  
+              <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+                <img
+                  src={
+                    algo.id === "love-calculator"
+                      ? "/calc.webp"
+                      : algo.id === "flames"
+                      ? "/flames.webp"
+                      : algo.id === "nickname-generator"
+                      ? "/nickname.webp"
+                      : algo.id === "card-creator"
+                      ? "/val-card.webp"
+                      : algo.id === "Marry"
+                      ? "/marry.webp"
+                      : algo.id === "truth-or-dare"
+                      ? "/truth-dare.webp"
+                      : algo.id === "drake-equation"
+                      ? "/equation.webp"
+                      : algo.id === "love-quiz"
+                      ? "/quiz.webp"
+                      : "/heart.webp"
+                  }
+                  alt={algo.title}
+                  className="w-20 h-20 object-contain drop-shadow-md"
+                />
+                 </div>
+                  {/* Title */}
+                  <h3 className="font-display text-2xl font-bold text-[#F75270] mb-3 group-hover:text-pink-600 transition-colors">
+                    {algo.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[#E45A92] leading-relaxed mb-6">
+                    {algo.description}
+                  </p>
+
+                  {/* CTA */}
+                  <div className="flex items-center text-[#E45A92] font-semibold group-hover:gap-3 gap-2 transition-all">
+                    <span>Try it now</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+=======
         {/* Search */}
         <div className="max-w-2xl mx-auto mb-10">
           <div className="relative">
@@ -241,8 +314,15 @@ export default function Home() {
 
                   <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20">
                     <Heart className="w-12 h-12 text-pink-500 fill-pink-500" />
+>>>>>>> main
                   </div>
 
+<<<<<<< ui-enhancements
+                
+                <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Heart className="w-12 h-12 text-pink-500 fill-pink-500" />
+=======
+>>>>>>> main
                 </div>
               </motion.div>
             );
