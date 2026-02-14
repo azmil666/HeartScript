@@ -43,7 +43,7 @@ export default function AlgorithmsDashboard() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-red-50">
+    <main className="min-h-screen bg-transparent">
       <div className="container mx-auto px-4 py-16">
         
         {/* Header */}
@@ -119,11 +119,11 @@ export default function AlgorithmsDashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-16"
+          className="text-center mt-16 pb-8"
         >
           <button
             onClick={() => router.push("/")}
-            className="px-8 py-4 bg-white border-2 border-pink-200 rounded-xl text-gray-700 font-semibold hover:bg-pink-50 hover:border-pink-300 transition-all shadow-sm"
+            className="px-8 py-4 bg-white/80 backdrop-blur-sm border-2 border-pink-200 rounded-xl text-gray-700 font-semibold hover:bg-pink-50 hover:border-pink-300 transition-all shadow-sm"
           >
             ← Back to Home
           </button>
