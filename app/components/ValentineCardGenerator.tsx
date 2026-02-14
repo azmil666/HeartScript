@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import CardPreview from "./CardPreview";
 import { Download, FileText, Mail, MessageCircle, Heart, ArrowLeft, Send, Copy, Check } from "lucide-react";
+import { CardDownloadButton } from "../components/CardDownloadButton";
 
 export default function ValentineCardGenerator() {
   const [step, setStep] = useState(1);
@@ -433,7 +434,11 @@ export default function ValentineCardGenerator() {
           </div>
 
           {/* Full Card Preview */}
-          <div ref={cardRef} className="flex justify-center mb-8">
+          <div 
+            ref={cardRef} 
+            id="valentine-card-preview"
+            className="flex justify-center mb-8"
+          >
             <div className="relative w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl shadow-[0_0_60px_rgba(244,63,94,0.35)]">
               {/* Theme Gradient */}
               <div className={`absolute inset-0 ${
@@ -475,6 +480,14 @@ export default function ValentineCardGenerator() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Decorative Wax Seal Download */}
+          <div className="flex justify-center mb-10">
+            <CardDownloadButton
+              cardElementId="valentine-card-preview"
+              cardTitle={`valentine-card-${recipient || "card"}`}
+            />
           </div>
 
           {/* Action Buttons */}
