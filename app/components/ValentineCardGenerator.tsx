@@ -184,7 +184,6 @@ export default function ValentineCardGenerator() {
         </div>
       </div>
 
-
       {/* STEP 1 */}
       {step === 1 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-start">
@@ -201,10 +200,10 @@ export default function ValentineCardGenerator() {
               </p>
             </div>
 
-
             {/* Recipient */}
             <div>
               <input
+                autoFocus   
                 value={recipient}
                 onChange={(e)=>setRecipient(e.target.value)}
                 placeholder="Recipient Name"
@@ -214,7 +213,6 @@ export default function ValentineCardGenerator() {
                 Enter the name of the person receiving the card.
               </p>
             </div>
-
 
             {/* Message */}
             <div>
@@ -245,7 +243,6 @@ export default function ValentineCardGenerator() {
               </div>
             </div>
 
-
             {/* Theme */}
             <div>
               <span className="text-sm font-medium text-gray-700 mb-2 block">
@@ -267,7 +264,6 @@ export default function ValentineCardGenerator() {
               </p>
             </div>
 
-
             {/* Buttons */}
             <div className="flex gap-4">
               <button
@@ -288,7 +284,6 @@ export default function ValentineCardGenerator() {
 
           </div>
 
-
           <CardPreview
             recipient={recipient}
             message={message}
@@ -301,7 +296,6 @@ export default function ValentineCardGenerator() {
     </main>
   );
 }
-
 
 function Step({ number, label, active }: any){
   return(
