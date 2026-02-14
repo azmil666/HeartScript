@@ -10,7 +10,40 @@ export default function DestinedMarryPage() {
   const [date4, setDate4] = useState("");
   const [result, setResult] = useState("");
 
+  const todayStr = new Date().toISOString().split("T")[0];
+
+  //ensure age ≥ 15
+  const minBirthday = new Date();
+  minBirthday.setFullYear(minBirthday.getFullYear() - 100); // allow max age 100
+  const minBirthdayStr = minBirthday.toISOString().split("T")[0];
+
   function handleEstimate() {
+    const now = new Date();
+    const b1 = new Date(date1);
+    const b2 = new Date(date2);
+    const meet = new Date(date3);
+    const fight = new Date(date4);
+
+    // Basic validations
+    if (!date1 || !date2 || !date3 || !date4) {
+      setResult("Please fill in all dates.");
+      return;
+    }
+
+    // Birthdays must be at least 15 years ago
+    const minAllowed = new Date();
+    minAllowed.setFullYear(minAllowed.getFullYear() - 15);
+    if (b1 > minAllowed || b2 > minAllowed) {
+      setResult("Both birthdays must be at least 15 years ago.");
+      return;
+    }
+
+    // No date in future
+    if (b1 > now || b2 > now || meet > now || fight > now) {
+      setResult("Dates cannot be in the future.");
+      return;
+    }
+
     const estDate = generateMDate(date1, date2, date3, date4);
     setResult(estDate || "Invalid Input");
   }
@@ -34,6 +67,8 @@ export default function DestinedMarryPage() {
             <input
               type="date"
               value={date1}
+              max={todayStr}
+              min={minBirthdayStr}
               onChange={(e) => setDate1(e.target.value)}
               className="w-full p-3 rounded-lg bg-black/30 border border-white/10 outline-none"
             />
@@ -45,6 +80,8 @@ export default function DestinedMarryPage() {
             <input
               type="date"
               value={date2}
+              max={todayStr}
+              min={minBirthdayStr}
               onChange={(e) => setDate2(e.target.value)}
               className="w-full p-3 rounded-lg bg-black/30 border border-white/10 outline-none"
             />
@@ -56,6 +93,7 @@ export default function DestinedMarryPage() {
             <input
               type="date"
               value={date3}
+              max={todayStr}
               onChange={(e) => setDate3(e.target.value)}
               className="w-full p-3 rounded-lg bg-black/30 border border-white/10 outline-none"
             />
@@ -67,6 +105,7 @@ export default function DestinedMarryPage() {
             <input
               type="date"
               value={date4}
+              max={todayStr}
               onChange={(e) => setDate4(e.target.value)}
               className="w-full p-3 rounded-lg bg-black/30 border border-white/10 outline-none"
             />
@@ -80,6 +119,7 @@ export default function DestinedMarryPage() {
           Find Out
         </button>
 
+        {/* Result with Heart Animation */}
         {result && (
           <div className="text-center mt-6 relative">
             <p className="text-sm opacity-70">
@@ -108,7 +148,7 @@ export default function DestinedMarryPage() {
         )}
       </div>
 
-      {/*animations */} 
+      {/* Custom animations */}
       <style jsx>{`
         @keyframes popHeart {
           0% { transform: scale(0); opacity: 0; }
@@ -130,7 +170,6 @@ export default function DestinedMarryPage() {
         .delay-600 { animation-delay: 0.6s; }
         .delay-800 { animation-delay: 0.8s; }
       `}</style>
-      
     </div>
   );
 }
