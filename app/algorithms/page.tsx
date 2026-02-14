@@ -1,10 +1,10 @@
 "use client";
 
-import { Heart, Calculator, Flame, MessageCircle, Sparkles, PenTool } from "lucide-react";
+import { Heart, Calculator, Flame, MessageCircle, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function Home() {
+export default function AlgorithmsDashboard() {
   const router = useRouter();
 
   const algorithms = [
@@ -36,30 +36,15 @@ export default function Home() {
       id: "card-creator",
       title: "Valentine Card",
       description: "Create and send beautiful personalized valentine cards",
-      icon: PenTool,
+      icon: Heart,
       color: "from-red-500 to-pink-500",
       path: "/create",
     },
-    {
-      id: "truth-or-dare",
-      title: "Truth or Dare",
-      description: "A Valentine’s twist on Truth or Dare with sweet questions and romantic challenges made to bring you closer. 💘",
-      icon: PenTool,
-      color: "from-red-500 to-pink-500",
-      path: "/truth-or-dare",
-    },
-
   ];
 
   return (
-    <main className="min-h-screen bg-transparent relative overflow-hidden">
-      {/* Dynamic Background Elements (inspired by previous Hero) */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-pink-300/20 blur-[120px] rounded-full mix-blend-multiply animate-pulse" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-red-200/20 blur-[100px] rounded-full mix-blend-multiply animate-pulse delay-1000" />
-      </div>
-
-      <div className="container mx-auto px-4 py-16 relative z-10">
+    <main className="min-h-screen bg-transparent">
+      <div className="container mx-auto px-4 py-16">
         
         {/* Header */}
         <motion.div
@@ -90,7 +75,7 @@ export default function Home() {
               onClick={() => router.push(algo.path)}
               className="group cursor-pointer"
             >
-              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50">
+              <div className="relative h-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
                 
                 {/* Gradient Background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${algo.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
@@ -99,7 +84,7 @@ export default function Home() {
                 <div className="relative p-8">
                   
                   {/* Icon */}
-                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${algo.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${algo.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                     <algo.icon className="w-8 h-8 text-white" />
                   </div>
 
@@ -128,6 +113,21 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
+
+        {/* Footer CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-16 pb-8"
+        >
+          <button
+            onClick={() => router.push("/")}
+            className="px-8 py-4 bg-white/80 backdrop-blur-sm border-2 border-pink-200 rounded-xl text-gray-700 font-semibold hover:bg-pink-50 hover:border-pink-300 transition-all shadow-sm"
+          >
+            ← Back to Home
+          </button>
+        </motion.div>
       </div>
     </main>
   );
